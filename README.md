@@ -1,4 +1,4 @@
-# Uri parser and query search parameter extracter for JavaScript
+# Uri parser and query param extracter for JavaScript
 A simple url parser in JavaScript
 
 1. Allows you to parse a url in conformance to WHATWG specs
