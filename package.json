@@ -1,0 +1,23 @@
+{
+  "name": "uri-parser",
+  "version": "1.0.0",
+  "description": "URI parser, and query parameter search utility",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DannySofftie/uri-parser.git"
+  },
+  "keywords": [
+    "uri-parser",
+    "query-string-parameters"
+  ],
+  "author": "Danny Sofftie",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DannySofftie/uri-parser/issues"
+  },
+  "homepage": "https://github.com/DannySofftie/uri-parser#readme"
+}
