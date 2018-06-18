@@ -12,7 +12,8 @@
   },
   "keywords": [
     "uri-parser",
-    "query-string-parameters"
+    "query-string-parameters",
+    "uri-param-parser"
   ],
   "author": "Danny Sofftie",
   "license": "MIT",
