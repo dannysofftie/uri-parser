@@ -27,41 +27,36 @@ IN THE SOFTWARE.
  */
 export class Parser {
     private url: string
-    private test: boolean
     /**
      * 
      * @param {string} url url to parse
      */
     constructor(url: string) {
+        if (typeof url == "undefined")
+            throw new Error('Expected url to parse but found none')
+        if (!this.parse(url))
+            throw new Error('URL does not conform to WHATWG URL specs')
         this.url = url
-        this.test = false
-        this.parse(this.url)
     }
     private parse(url: string) {
-        let regex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
-        return regex.test(url) ? this.test = true : this.test = false
+        let regex: RegExp = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
+        return regex.test(url)
     }
-    public extract(param: string): string {
-        if (this.test == false)
-            throw new Error('URL does not confrom to WHATWG URL standard')
-        if (typeof param == undefined)
-            throw new Error('Expected param to search but found none')
+    public extract(param?: string) {
         if (this.url.indexOf('?') == -1)
             return 'Can\'t get search params'
         else {
-            let params: Array<string> = [],
-                paramValue = ''
-            if (this.url.split('?')[1].indexOf('&') !== -1)
-                params = this.url.split('?')[1].split('&')
+            let u: string = this.url.split('?')[1], s, obj: any = {}
+            if (u.indexOf('&') != -1) s = u.split('&')
+            else s = u
+            if (typeof s == "string")
+                obj[s.split('=')[0].trim()] = s.split('=')[1]
             else
-                params = Array.from(this.url.split('?')[1])
-            params.forEach(p => {
-                if (p.split('=')[0].trim() === param.trim())
-                    paramValue = p.split('=')[1].trim()
-                else
-                    paramValue = ''
-            })
-            return paramValue
+                s.map(p => obj[p.split('=')[0].trim()] = p.split('=')[1])
+            if (typeof param != "undefined")
+                return obj[param]
+            else return obj
         }
+
     }
 }

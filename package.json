@@ -1,5 +1,5 @@
 {
-  "name": "uri-parser",
+  "name": "uri-param-parser",
   "version": "1.0.0",
   "description": "URI parser, and query parameter search utility",
   "main": "dist/index.js",

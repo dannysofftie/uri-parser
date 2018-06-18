@@ -1,18 +1,25 @@
-# Uri parser and query param extracter for JavaScript
+# Uri query parameters extracter for JavaScript
 A simple url parser in JavaScript
 
 1. Allows you to parse a url in conformance to WHATWG specs
 2. Allows you to extract query search parameter values
+3. Works for url with multiple parameters
 
 # Example usage
 
-```js
-let url = new Parser('http://example.com/?name=danny-sofftie')
+```ts
+import { Parser } from 'uri-param-parser'
+let parser = new Parser('http://example.com/?name=danny-sofftie')
 // parses a url in accordance to WHATWG uri specs
-let paramValue = url.extract('name')
-// will return 'danny-sofftie' as the paramValue
+let paramValue = parser.extract()
+// will return an object as { param: value }
 ```
-
+# Pass search parameter 
+```ts
+let paramValue = parser.extract('name')
+// will return 'value' of the parameter passed
+// e.g. 'danny-sofftie'
+```
 # License
 MIT License contributions are welcome
 

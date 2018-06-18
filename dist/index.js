@@ -30,37 +30,35 @@ var Parser = /** @class */ (function () {
      * @param {string} url url to parse
      */
     function Parser(url) {
+        if (typeof url == "undefined")
+            throw new Error('Expected url to parse but found none');
+        if (!this.parse(url))
+            throw new Error('URL does not conform to WHATWG URL specs');
         this.url = url;
-        this.test = false;
-        this.parse(this.url);
     }
     Parser.prototype.parse = function (url) {
         var regex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
-        return regex.test(url) ? this.test = true : this.test = false;
+        return regex.test(url);
     };
     Parser.prototype.extract = function (param) {
-        if (this.test == false)
-            throw new Error('URL does not confrom to WHATWG URL standard');
-        if (typeof param == undefined)
-            throw new Error('Expected param to search but found none');
         if (this.url.indexOf('?') == -1)
             return 'Can\'t get search params';
         else {
-            var params = [], paramValue_1 = '';
-            if (this.url.split('?')[1].indexOf('&') !== -1)
-                params = this.url.split('?')[1].split('&');
+            var u = this.url.split('?')[1], s = void 0, obj_1 = {};
+            if (u.indexOf('&') != -1)
+                s = u.split('&');
             else
-                params = Array.from(this.url.split('?')[1]);
-            params.forEach(function (p) {
-                if (p.split('=')[0].trim() === param.trim())
-                    paramValue_1 = p.split('=')[1].trim();
-                else
-                    paramValue_1 = '';
-            });
-            return paramValue_1;
+                s = u;
+            if (typeof s == "string")
+                obj_1[s.split('=')[0].trim()] = s.split('=')[1];
+            else
+                s.map(function (p) { return obj_1[p.split('=')[0].trim()] = p.split('=')[1]; });
+            if (typeof param != "undefined")
+                return obj_1[param];
+            else
+                return obj_1;
         }
     };
     return Parser;
 }());
 exports.Parser = Parser;
-//# sourceMappingURL=index.js.map
